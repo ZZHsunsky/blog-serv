@@ -1,8 +1,8 @@
 module.exports = {
 	redis:{
-		host:"127.0.0.1",
+		host:"39.108.133.245",
 		port:"6379",
-		password:123456,
+		//password:123456,
 		ttl:1000*60*2,
 	}
 }

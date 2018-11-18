@@ -1,4 +1,4 @@
-const mredis = require("./mredis");
+ const mredis = require("./mredis");
 
 
 async function testAppendLog(){
@@ -23,4 +23,4 @@ async function testGetLogGroup(){
 	console.log( await mredis.getLogGroup());
 }
 
-testGetLogs();
+testGetLogGroup();
