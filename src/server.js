@@ -2,26 +2,26 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const multer =require("multer");
 const fs = require("fs");
+const path = require("path")
 const mredis = require("./mredis");
 
 const app = express();
 const upload = multer({dest:'upload/'}).any();
 const allowCrossDomain = function(req, res, next) {
-    res.header("Access-Control-Allow-Credentials", true)
-  	res.header("Access-Control-Allow-Origin", "*")
-  	res.header("Access-Control-Allow-Headers", "X-Requested-With,content-Type")
-  	res.header("Access-Control-Allow-Methods", "PUT,POST,GET,DELETE,OPTIONS")
-  	res.header("X-Powered-By", ' 3.2.1')
-  	res.header("Content-Type", "application/json;charset=utf-8")
+    res.header("Access-Control-Allow-Credentials", true);
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "X-Requested-With,content-Type");
+    res.header("Access-Control-Allow-Methods", "PUT,POST,GET,DELETE,OPTIONS");
+    res.header("X-Powered-By", ' 3.2.1');
     next();
 };
 
 app.use(allowCrossDomain);
+app.use("/pic" ,express.static('./uploads'))
 app.use(bodyParser.urlencoded({ extended: false })); 
 app.use(bodyParser.json({limit: '500mb'}));
 app.use(bodyParser.urlencoded({limit: '500mb', extended: true}));
 
-app.get("/",(req,res) => res.send("hello world!"))
 
 app.post('/upload',function(req,res){
     console.log("---------访问上传路径-------------"); 
