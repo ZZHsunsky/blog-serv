@@ -18,6 +18,7 @@ const allowCrossDomain = function(req, res, next) {
 
 app.use(allowCrossDomain);
 app.use("/pic" ,express.static('./uploads'))
+app.use(express.static("./public"))
 app.use(bodyParser.urlencoded({ extended: false })); 
 app.use(bodyParser.json({limit: '500mb'}));
 app.use(bodyParser.urlencoded({limit: '500mb', extended: true}));
