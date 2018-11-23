@@ -120,6 +120,30 @@ module.exports = {
 			console.log(err);
 			return [];
 		};
-	}
+	},
 
+	verify: async function(name, pwd){
+		let result = 0;
+		let RetCode = -1;
+		try{
+			await client.sismemberAsync(redisKeyMap.USER_STATIC, name).then( res => result = res);
+			if(result){
+				await client.getAsync(redisKeyMap.QUERY_PASSWOD + name).then( res => {
+					if( res == pwd){
+						console.log("验证成功")
+						RetCode = 0;
+					}else{
+						console.log("验证失败")
+						RetCode = 1;
+					}
+				})
+			}else{
+				RetCode = -1;
+			}
+		}catch(err){
+			console.log(err);
+			RetCode = -1;
+		};
+		return RetCode; 
+	}
 }

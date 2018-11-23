@@ -4,4 +4,9 @@ module.exports = {
 	QUERY_LOG_ID: "blog:log:ids",  // type: set
 	QUERY_LOG_CONENT: "blog:log:content:",
 	QUERY_LOG_GROUPS: "blog:log:groups",  // type: set
+
+	USER_STATIC: "blog:users",
+	QUERY_USER: "blog:user:",
+	QUERY_PASSWOD: "blog:userpas:"
+	
 }
