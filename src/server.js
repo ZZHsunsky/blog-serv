@@ -18,7 +18,6 @@ const allowCrossDomain = function(req, res, next) {
 
 app.use(allowCrossDomain);
 app.use("/pic" ,express.static('./uploads'))
-app.use(express.static("./public"))
 app.use(bodyParser.urlencoded({ extended: false })); 
 app.use(bodyParser.json({limit: '500mb'}));
 app.use(bodyParser.urlencoded({limit: '500mb', extended: true}));
@@ -33,14 +32,13 @@ app.post('/upload',function(req,res){
           console.log(err);
           return;
       } 
+      
       req.file = req.files[0];
       var tmp_path = req.file.path;
+      var file_type = req.file.originalname.lastIndexOf(".")
+      var target_name = new Date().getTime() + req.file.originalname.substring(file_type, req.file.originalname.length);
+      var target_path = 'uploads/' + target_name;
 
-      /** The original name of the uploaded file
-          stored in the variable "originalname". **/
-      var target_path = 'uploads/' + req.file.originalname;
-
-      /** A better way to copy the uploaded file. **/
 
       if (!fs.existsSync('uploads/')) {
             fs.mkdirSync('uploads/');
@@ -53,11 +51,11 @@ app.post('/upload',function(req,res){
       	fs.unlink("./" + tmp_path, function(err){
       		if(err) throw err;
       	})
-        res.end(); 
+        res.json({fileName: target_name}); 
       });
       src.on('error', function(err) { 
         res.end(); 
-        console.log(err);
+
       });        
     });
 });
