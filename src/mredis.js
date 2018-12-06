@@ -186,5 +186,16 @@ module.exports = {
 			console.log(err);
 			return -1;
 		}
+	},
+
+	deletePhoto: async function (id, photo) {
+		let retCode = 0;
+		try{
+			await client.sremAsync(redisKeyMap.QUERY_ALUM + id, photo).then( res => retCode = res);
+			return retCode;
+		}catch(err){
+			console.log(err);
+			return -1;
+		}
 	}
 }

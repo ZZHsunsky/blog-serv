@@ -88,13 +88,19 @@ app.get("/getAlums", async function (req,res) {
 
 app.get("/addAlum", async function (req,res) {
   ret = await mredis.addAlum();
-  res.json({retCode: ret})
+  res.json({retCode: ret});
 })
 
 app.post("/addPhotos", async function (req,res) {
-  const query = req.query;
+  const query = req.body;
   ret = await mredis.addPhotos(query.id, query.photos);
-  res.json({retCode: ret})
+  res.json({retCode: ret});
+})
+
+app.get("/deletePhoto", async function (req,res)  {
+  const query = req.query;
+  ret = await mredis.deletePhoto(query.id, query.photo);
+  res.json({retCode: ret});
 })
 
 app.listen(8900, () => console.log("Example app listening on port:8900"))

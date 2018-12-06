@@ -35,4 +35,8 @@ async function testAddPhotos(id, photos) {
 	console.log( await mredis.addPhotos(id, photos))
 }
 
-testAddPhotos(1, [1,2,3]);
+async function testDeletePhoto(id, photo) {
+	console.log( await mredis.deletePhoto(id, photo))
+}
+
+testDeletePhoto(3, 5);
