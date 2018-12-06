@@ -78,7 +78,23 @@ app.get("/getLogs", async function(req,res){
 app.get("/verify", async function(req,res){
   const query = req.query;
   ret = await mredis.verify(query.username, query.password);
-  res.json({retCode:ret});
+  res.json({retCode: ret});
+})
+
+app.get("/getAlums", async function (req,res) {
+  ret = await mredis.getAlums();
+  res.send(ret);
+})
+
+app.get("/addAlum", async function (req,res) {
+  ret = await mredis.addAlum();
+  res.json({retCode: ret})
+})
+
+app.post("/addPhotos", async function (req,res) {
+  const query = req.query;
+  ret = await mredis.addPhotos(query.id, query.photos);
+  res.json({retCode: ret})
 })
 
 app.listen(8900, () => console.log("Example app listening on port:8900"))

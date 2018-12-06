@@ -23,4 +23,16 @@ async function testGetLogGroup(){
 	console.log( await mredis.getLogGroup());
 }
 
-testGetLogGroup();
+async function testGetAlums() {
+	console.log( await mredis.getAlums());
+}
+
+async function testAddAlums() {
+	console.log( await mredis.addAlum());
+}
+
+async function testAddPhotos(id, photos) {
+	console.log( await mredis.addPhotos(id, photos))
+}
+
+testAddPhotos(1, [1,2,3]);

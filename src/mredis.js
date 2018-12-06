@@ -105,16 +105,14 @@ module.exports = {
 
 	getLogs: async function(){
 		let ret = [];
-		let logIDS = []
+		let logIDS = [];
 		try{
 			await client.smembersAsync(redisKeyMap.QUERY_LOG_ID).then( res => logIDS = res);
 			for(let _ = 0 ; _ < logIDS.length ; _ ++){
 				await client.hgetallAsync(redisKeyMap.QUERY_LOG_CONENT + logIDS[_]).then( res => {
 					ret.push(res);
-					console.log(res.title);
 				}).catch(err => console.log(err))
 			}
-			console.log(ret.length);
 			return ret;
 		}catch(err){
 			console.log(err);
@@ -145,5 +143,48 @@ module.exports = {
 			RetCode = -1;
 		};
 		return RetCode; 
+	},
+
+	getAlums: async function () {
+		let ret = [];
+		let alumIds = [];
+		try{
+			await client.smembersAsync(redisKeyMap.ALUM_STATIC).then( res => alumIds = res);
+			for(let _ = 0 ; _ < alumIds.length ; _ ++){
+				await client.smembersAsync(redisKeyMap.QUERY_ALUM + alumIds[_]).then(res => {
+					ret.push({
+						id: alumIds[_],
+						photos: res,
+					})
+				})
+			};
+			return ret;
+		}catch(err){
+			console.log(err);
+			return [];
+		}
+	},
+
+	addAlum: async function () {
+		try{
+			let ids = 0;
+			await client.smembersAsync(redisKeyMap.ALUM_STATIC).then( res => ids = (res || []).length);
+			await client.sadd(redisKeyMap.ALUM_STATIC, ids + 1);
+			return 0;
+		}catch(err){
+			console.log(err);
+			return -1;
+		}
+	},
+
+	addPhotos: async function (id,photos) {
+		let retCode = 0;
+		try{
+			await client.saddAsync(redisKeyMap.QUERY_ALUM + id, photos).then( res => retCode = res);
+			return retCode;
+		}catch(err){
+			console.log(err);
+			return -1;
+		}
 	}
 }

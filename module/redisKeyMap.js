@@ -7,6 +7,8 @@ module.exports = {
 
 	USER_STATIC: "blog:users",
 	QUERY_USER: "blog:user:",
-	QUERY_PASSWOD: "blog:userpas:"
+	QUERY_PASSWOD: "blog:userpas:",
 	
+	ALUM_STATIC: "blog:alums",
+	QUERY_ALUM: "blog:alum:",
 }
