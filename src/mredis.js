@@ -151,12 +151,10 @@ module.exports = {
 		try{
 			await client.smembersAsync(redisKeyMap.ALUM_STATIC).then( res => alumIds = res);
 			for(let _ = 0 ; _ < alumIds.length ; _ ++){
-				await client.smembersAsync(redisKeyMap.QUERY_ALUM + alumIds[_]).then(res => {
-					ret.push({
-						id: alumIds[_],
-						photos: res,
-					})
-				})
+				const alum = {id: alumIds[_]};
+				await client.smembersAsync(redisKeyMap.QUERY_ALUM + alumIds[_]).then(res => alum.photos = res);
+				await client.getAsync(redisKeyMap.QUERY_ALUM_DESC + alumIds[_]).then(res => alum.desc = res);
+				ret.push(alum);
 			};
 			return ret;
 		}catch(err){

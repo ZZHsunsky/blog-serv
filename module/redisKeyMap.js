@@ -11,4 +11,5 @@ module.exports = {
 	
 	ALUM_STATIC: "blog:alums",
 	QUERY_ALUM: "blog:alum:",
+	QUERY_ALUM_DESC: "blog:alum:desc:",
 }
