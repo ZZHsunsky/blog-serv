@@ -1,6 +1,7 @@
 const redis = require("redis");
 const RedisOptions = require("../conf/redis-conf");
 const async = require("async");
+const fs = require("fs");
 /* ----- Promise化Redis ---- */
 
 const bluebird = require("bluebird");
@@ -190,6 +191,13 @@ module.exports = {
 		let retCode = 0;
 		try{
 			await client.sremAsync(redisKeyMap.QUERY_ALUM + id, photo).then( res => retCode = res);
+			fs.unlink("uploads/" + photo, err => {
+				if(err){
+					console.log(err);
+				}else{
+					console.log("删除成功");
+				}
+			})
 			return retCode;
 		}catch(err){
 			console.log(err);
