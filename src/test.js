@@ -14,6 +14,11 @@ async function testRemoveLog(){
 	console.log( await mredis.removeLog(id));
 }
 
+async function testGetLog(){
+	const id = 2;
+	console.log ( await mredis.getLog(id) );
+}
+
 async function testGetLogs(){
 	const id = 2;
 	const logs = await mredis.getLogs(3);
@@ -40,4 +45,4 @@ async function testDeletePhoto(id, photo) {
 	console.log( await mredis.deletePhoto(id, photo))
 }
 
-testGetLogs();
+testGetLog();
