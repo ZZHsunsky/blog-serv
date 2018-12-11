@@ -104,16 +104,29 @@ module.exports = {
 		return ret;
 	},
 
-	getLogs: async function(){
+	getLogs: async function(lastId){
 		let ret = [];
 		let logIDS = [];
+		const onceFetchNumber = 10;
 		try{
 			await client.smembersAsync(redisKeyMap.QUERY_LOG_ID).then( res => logIDS = res);
-			for(let _ = 0 ; _ < logIDS.length ; _ ++){
+
+			let startIndex = logIDS.length - 1;
+			if(lastId){
+				for(let _ = startIndex ; _ >= 0; _ --){
+					if(logIDS[_] == (lastId + "")){
+						startIndex = _ - 1;
+						break;
+					}
+				}
+			}
+
+			for(let _ = startIndex ; _ >= 0 && _ > (startIndex - onceFetchNumber) ; _ --){
 				await client.hgetallAsync(redisKeyMap.QUERY_LOG_CONENT + logIDS[_]).then( res => {
-					ret.push(res);
+					ret.push({...res, id: logIDS[_]});
 				}).catch(err => console.log(err))
 			}
+
 			return ret;
 		}catch(err){
 			console.log(err);

@@ -16,7 +16,8 @@ async function testRemoveLog(){
 
 async function testGetLogs(){
 	const id = 2;
-	console.log( await mredis.getLogs());
+	const logs = await mredis.getLogs(3);
+	console.log(logs.length)
 }
 
 async function testGetLogGroup(){
@@ -39,4 +40,4 @@ async function testDeletePhoto(id, photo) {
 	console.log( await mredis.deletePhoto(id, photo))
 }
 
-testDeletePhoto(3, 5);
+testGetLogs();
