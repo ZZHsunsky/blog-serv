@@ -115,4 +115,10 @@ app.get("/deletePhoto", async function (req,res)  {
   res.json({retCode: ret});
 })
 
+app.get("/guestLogin", async function(req,res){
+  const query = req.query;
+  ret = await mredis.guestLogin(query.guestName, query.avatar);
+  res.json({retCode: ret});
+})
+
 app.listen(8900, () => console.log("Example app listening on port:8900"))

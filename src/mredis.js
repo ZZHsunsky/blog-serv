@@ -150,6 +150,30 @@ module.exports = {
 		}
 	},	
 
+	addLogComment: async function (comment) {
+		
+	},
+
+	guestLogin : async function (name, avatar) {
+		try{
+			let query = null;
+			await client.getAsync(redisKeyMap.GUEST_MEMBERS + name).then( res => query = res)
+			if(query){
+				if(avatar == query){
+					return SUCCESS;
+				}else{
+					return FAIL;
+				}
+			}else{
+				await client.setAsync(redisKeyMap.GUEST_MEMBERS + name, avatar);
+				return SUCCESS;
+			}
+		}catch(err){
+			console.log(err);
+			return FAIL;
+		}
+	},
+
 	verify: async function(name, pwd){
 		let result = 0;
 		let RetCode = -1;

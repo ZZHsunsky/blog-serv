@@ -48,4 +48,8 @@ async function testLogReadPlus(id) {
 	console.log( await mredis.logReadPlus(id))
 }
 
-testLogReadPlus(2);
+async function testGuestLogin(name, avatar) {
+	console.log( await mredis.guestLogin(name, avatar))
+}
+
+testGuestLogin("denghuo97", 3);
