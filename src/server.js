@@ -81,6 +81,12 @@ app.get("/getLogs", async function(req,res){
 	res.send(ret);
 })
 
+app.get("/logAccess", async function (req,res) {
+   const query = req.query;
+   ret = await mredis.logReadOrLikePlus(query.id, query.type);
+   res.json({retCode: ret});
+})
+
 app.get("/verify", async function(req,res){
   const query = req.query;
   ret = await mredis.verify(query.username, query.password);

@@ -18,7 +18,7 @@ client.on("error",function (err) {
 	console.log(`[Redis] : Error - ${err}`);
 })
 
-const SUCCESS = "SUCCESS";
+const SUCCESS = "Success";
 const NOFIND = "NoFind";
 const FAIL = "Fail";
 
@@ -133,6 +133,21 @@ module.exports = {
 			return [];
 		};
 	},
+
+	logReadOrLikePlus: async function (id, type) {
+		try{
+			let read = 0;
+			await client.hgetAsync(redisKeyMap.QUERY_LOG_CONENT + id, type).then( res => read = res);
+			if(read != null){
+				await client.hsetAsync(redisKeyMap.QUERY_LOG_CONENT + id, type, parseInt(read) + 1);
+				return SUCCESS;
+			}
+			return NOFIND;
+		}catch(err){
+			console.log(err);
+			return FAIL;
+		}
+	},	
 
 	verify: async function(name, pwd){
 		let result = 0;
