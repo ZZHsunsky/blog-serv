@@ -85,6 +85,7 @@ module.exports = {
 			if(isMember){
 				let log = {};
 				await client.hgetallAsync(redisKeyMap.QUERY_LOG_CONENT + id).then( res => log = res);
+				this.logReadOrLikePlus(id, "read");
 				return log;
 			}
 			return NOFIND;
