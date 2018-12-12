@@ -73,12 +73,18 @@ app.get("/getLogGroup", async function(res,res){
 app.get("/getLog", async function (req,res) {
   const query = req.query;
   ret = await mredis.getLog(query.id);
-  res.send(id);
+  res.send(ret);
 })
 
 app.get("/getLogs", async function(req,res){
 	ret = await mredis.getLogs();
 	res.send(ret);
+})
+
+app.get("/logAccess", async function (req,res) {
+   const query = req.query;
+   ret = await mredis.logReadOrLikePlus(query.id, query.type);
+   res.json({retCode: ret});
 })
 
 app.get("/verify", async function(req,res){
