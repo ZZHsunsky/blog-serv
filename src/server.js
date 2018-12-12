@@ -73,7 +73,7 @@ app.get("/getLogGroup", async function(res,res){
 app.get("/getLog", async function (req,res) {
   const query = req.query;
   ret = await mredis.getLog(query.id);
-  res.send(id);
+  res.send(ret);
 })
 
 app.get("/getLogs", async function(req,res){
