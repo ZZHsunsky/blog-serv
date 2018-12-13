@@ -86,7 +86,7 @@ module.exports = {
 				let log = {};
 				await client.hgetallAsync(redisKeyMap.QUERY_LOG_CONENT + id).then( res => log = res);
 				this.logReadOrLikePlus(id, "read");
-				return {..log, id};
+				return {...log, id};
 			}
 			return NOFIND;
 		}catch(err){
