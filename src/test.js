@@ -52,4 +52,12 @@ async function testGuestLogin(name, avatar) {
 	console.log( await mredis.guestLogin(name, avatar))
 }
 
-testGuestLogin("denghuo97", 3);
+async function testaddLogComment(){
+	console.log( await mredis.addLogComment(1, "this is a just comment~"));
+}
+
+async function testgetLogComments(){
+	console.log( await mredis.getLogComments(2));
+}
+
+testgetLogComments();

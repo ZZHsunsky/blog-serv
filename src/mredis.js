@@ -150,8 +150,30 @@ module.exports = {
 		}
 	},	
 
-	addLogComment: async function (comment) {
-		
+	addLogComment: async function (id, comment) {
+		try{
+			let ret = 0;
+			await client.lpushAsync(redisKeyMap.QUERY_LOG_COMMENTS + id, comment).then( res => ret = res);
+			if(ret){
+				return SUCCESS;
+			}else{
+				return FAIL;
+			}
+		}catch(err){
+			console.log(err);
+			return FAIL;
+		}
+	},
+
+	getLogComments: async function(id){
+		try{
+			let query = [];
+			await client.lrangeAsync(redisKeyMap.QUERY_LOG_COMMENTS + id, 0, -1).then(res => query = res);
+			return query;
+		}catch(err){
+			console.log(err);
+			return FAIL;
+		}
 	},
 
 	guestLogin : async function (name, avatar) {
