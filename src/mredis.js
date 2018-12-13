@@ -135,12 +135,15 @@ module.exports = {
 		};
 	},
 
-	logReadOrLikePlus: async function (id, type) {
+	logReadOrLikePlus: async function (id, type, userName) {
 		try{
 			let read = 0;
 			await client.hgetAsync(redisKeyMap.QUERY_LOG_CONENT + id, type).then( res => read = res);
 			if(read != null){
 				await client.hsetAsync(redisKeyMap.QUERY_LOG_CONENT + id, type, parseInt(read) + 1);
+				if(type == "like" && userName){
+					await client.lpushAsync(redisKeyMap.QUERY_LOG_LIKES + id, userName)
+				}
 				return SUCCESS;
 			}
 			return NOFIND;
@@ -149,6 +152,17 @@ module.exports = {
 			return FAIL;
 		}
 	},	
+
+	getLogLikes : async function(id) {
+		try{
+			let query = [];
+			await client.lrangeAsync(redisKeyMap.QUERY_LOG_LIKES + id, 0, -1).then( res => query = res);
+			return query;
+		}catch(err){
+			console.log(err);
+			return FAIL;
+		}
+	},
 
 	addLogComment: async function (id, comment) {
 		try{

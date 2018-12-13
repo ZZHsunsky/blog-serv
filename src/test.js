@@ -44,8 +44,8 @@ async function testAddPhotos(id, photos) {
 async function testDeletePhoto(id, photo) {
 	console.log( await mredis.deletePhoto(id, photo))
 }
-async function testLogReadPlus(id) {
-	console.log( await mredis.logReadPlus(id))
+async function testLogReadPlus(id, type, name) {
+	console.log( await mredis.logReadOrLikePlus(id,  type, name))
 }
 
 async function testGuestLogin(name, avatar) {
@@ -60,4 +60,4 @@ async function testgetLogComments(){
 	console.log( await mredis.getLogComments(2));
 }
 
-testgetLogComments();
+testLogReadPlus(1, "like", "denghuo98");
