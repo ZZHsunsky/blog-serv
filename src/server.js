@@ -122,14 +122,14 @@ app.get("/guestLogin", async function(req,res){
 })
 
 
-app.get("/appendComment", async function(req,res) {
+app.post("/appendComment", async function(req,res) {
   const query = req.query;
   ret = await mredis.addLogComment(query.id, query.comment);
   res.json({retCode: ret});
 })
 
 app.get("/getLogComments", async function(req,res) {
-  const query = req.query;
+  const query = req.body;
   ret = await mredis.getLogComments(query.id);
   res.send(ret);
 })
