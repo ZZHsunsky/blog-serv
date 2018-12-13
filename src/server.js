@@ -125,7 +125,7 @@ app.get("/guestLogin", async function(req,res){
 app.get("/appendComment", async function(req,res) {
   const query = req.query;
   ret = await mredis.addLogComment(query.id, query.comment);
-  ret.json({retCode: ret});
+  res.json({retCode: ret});
 })
 
 app.get("/getLogComments", async function(req,res) {
