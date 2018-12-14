@@ -217,7 +217,7 @@ module.exports = {
 			if(result){
 				await client.getAsync(redisKeyMap.QUERY_PASSWOD + name).then( res => {
 					if( res == pwd){
-						const userToken = md5(name + pwd + new Date.getTime());
+						const userToken = md5(name + pwd + new Date().getTime());
 						client.set(redisKeyMap.USER_TOKEN + name, userToken);
 						RetCode = userToken;
 					}else{

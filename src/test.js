@@ -60,4 +60,9 @@ async function testgetLogComments(){
 	console.log( await mredis.getLogComments(2));
 }
 
-console.log(md5("dwj" + "514227" + new Date().getTime()));
+
+async function testVerify(username, pwd){
+	console.log( await mredis.verify(username, pwd));
+}
+
+testVerify("dwj", "514227");
