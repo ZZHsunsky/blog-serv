@@ -234,6 +234,21 @@ module.exports = {
 		return RetCode; 
 	},
 
+	verifyToken: async function(name, token){
+		try{
+			let query = null;
+			await client.getAsync(redisKeyMap.USER_TOKEN + name).then(res => query = res);
+			if(token == query){
+				return SUCCESS;
+			}else{
+				return FAIL;
+			}
+		}catch(err){
+			console.log(err);
+			return FAIL;
+		}
+	},
+
 	getAlums: async function () {
 		let ret = [];
 		let alumIds = [];

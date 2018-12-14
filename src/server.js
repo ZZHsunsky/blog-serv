@@ -99,6 +99,12 @@ app.get("/verify", async function(req,res){
   res.json({retCode: ret});
 })
 
+app.get("/verifyToken", async function(req,res){
+  const query = req.query;
+  ret = await mredis.verifyToken(query.username, query.token);
+  res.json({retCode: ret});
+})
+
 app.get("/getAlums", async function (req,res) {
   ret = await mredis.getAlums();
   res.send(ret);
