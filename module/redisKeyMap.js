@@ -8,6 +8,7 @@ module.exports = {
 	QUERY_LOG_LIKES : "blog:log:likes:",
 
 	USER_STATIC: "blog:users",
+	USER_TOKEN : "blog:userToken:",
 	QUERY_USER: "blog:user:",
 	QUERY_PASSWOD: "blog:userpas:",
 	

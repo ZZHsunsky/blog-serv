@@ -2,6 +2,7 @@ const redis = require("redis");
 const RedisOptions = require("../conf/redis-conf");
 const async = require("async");
 const fs = require("fs");
+const md5 = require('js-md5');
 /* ----- Promise化Redis ---- */
 
 const bluebird = require("bluebird");
@@ -29,7 +30,6 @@ module.exports = {
 		await client.getAsync(redisKeyMap.LOG_STATIC_ID).then( res => {
 			tartId = parseInt(res);
 		});
-		console.log(tartId);
 		if(!tartId){ 
 			// 如果不存在则从1开始
 			client.set(redisKeyMap.LOG_STATIC_ID,1);
@@ -51,7 +51,6 @@ module.exports = {
 			}
 		});
 
-		console.log("[AppendLog]" + tartId + ":" + blog.title )
 		try{
 			await client.hmsetAsync(redisKeyMap.QUERY_LOG_CONENT + tartId, blog);
 			return SUCCESS;
@@ -218,10 +217,10 @@ module.exports = {
 			if(result){
 				await client.getAsync(redisKeyMap.QUERY_PASSWOD + name).then( res => {
 					if( res == pwd){
-						console.log("验证成功")
-						RetCode = 0;
+						const userToken = md5(name + pwd + new Date.getTime());
+						client.set(redisKeyMap.USER_TOKEN + name, userToken);
+						RetCode = userToken;
 					}else{
-						console.log("验证失败")
 						RetCode = 1;
 					}
 				})

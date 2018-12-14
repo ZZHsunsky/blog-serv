@@ -1,5 +1,5 @@
  const mredis = require("./mredis");
-
+const md5 = require('js-md5');
 
 async function testAppendLog(){
 	const blog = {
@@ -60,4 +60,4 @@ async function testgetLogComments(){
 	console.log( await mredis.getLogComments(2));
 }
 
-testLogReadPlus(1, "like", "denghuo98");
+console.log(md5("dwj" + "514227" + new Date().getTime()));
